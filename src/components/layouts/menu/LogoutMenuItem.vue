@@ -1,21 +1,20 @@
 <script setup>
-import { useAuthStore } from '@/stores/auth';
-const authStore = useAuthStore();
-
-function handleLogout() {
-  authStore.logout();
-}
+import { useRouter } from "vue-router";
+import { useAuthStore } from "@/stores/auth";
+const store = useAuthStore();
+const router = useRouter();
+const logout = (e) => {
+    store.logout();
+    router.push("/");
+};
 </script>
-
 <template>
-  <li class="px-3 py-2" v-if="authStore.isAuthenticated">
-    <router-link
-      class="flex items-center text-white hover:text-gray-200 transition-colors duration-200"
-      to="/"
-      @click="handleLogout"
+    <a 
+        href="#" 
+        class="flex items-center px-3 py-2 text-white hover:text-gray-200 transition-colors duration-200" 
+        @click.prevent="logout"
     >
-      <i class="fa-solid fa-sign-out-alt mr-2"></i>
-      로그아웃
-    </router-link>
-  </li>
+        <i class="fa-solid fa-right-from-bracket mr-2"></i>
+        로그아웃
+    </a>
 </template>

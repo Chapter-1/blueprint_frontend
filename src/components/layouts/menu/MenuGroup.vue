@@ -5,7 +5,7 @@ const props = defineProps({
 });
 </script>
 <template>
-    <ul class="flex flex-col md:flex-row md:ml-auto">
+    <ul class="flex flex-col md:flex-row md:ml-auto"> <!-- mr-auto 추가 -->
         <MenuItem 
             v-for="menu in menus" 
             :key="menu.title" 

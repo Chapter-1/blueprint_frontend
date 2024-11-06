@@ -12,9 +12,6 @@ export default defineConfig({
     vue(),
     VueDevTools(),
   ],
-  optimizeDeps: {
-    include: ['jwt-decode'],
-  },
   css: {
     postcss: {
       plugins: [

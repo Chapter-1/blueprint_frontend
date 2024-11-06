@@ -1,9 +1,5 @@
 <template>
-   <div class="min-h-screen bg-gray-100 p-4">
-    <ContentCard></ContentCard>
-  </div>
+    <h1>subscription</h1>
 </template>
-<script setup>
-import ContentCard from '@/components/cards/ContentCard.vue';
-</script>
+<script setup></script>
 <style></style>

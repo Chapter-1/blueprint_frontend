@@ -1,21 +1,21 @@
 export default [
     {
-        path: "/member/login",
+        path: "/auth/login",
         name: "login",
         component: () => import("../views/auth/LoginPage.vue"),
     },
     {
-        path: "/member/register",
-        name: "register",
-        component: () => import("../views/auth/RegisterPage.vue"),
+        path: "/auth/join",
+        name: "join",
+        component: () => import("../views/auth/JoinPage.vue"),
     },
     {
-        path: "/member/mypage",
-        name: "mypage",
-        component: () => import("../views/auth/MyPage.vue"),
+        path: "/auth/profile",
+        name: "profile",
+        component: () => import("../views/auth/ProfilePage.vue"),
     },
     {
-        path: "/member/changepassword",
+        path: "/auth/changepassword",
         name: "changepassword",
         component: () => import("../views/auth/ChangePasswordPage.vue"),
     },

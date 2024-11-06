@@ -20,12 +20,12 @@ export default {
   ],
   accountMenus: {
     login: {
-      url: "/member/login",
+      url: "/auth/login",
       title: "로그인",
       icon: ["far", "user"],
     },
-    register: {
-      url: "/member/register",
+    join: {
+      url: "/auth/join",
       title: "회원가입",
       icon: ["fas", "user-plus"],
     },

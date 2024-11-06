@@ -5,6 +5,7 @@ import policyRotes from "./policy";
 import economyRoutes from "./economy";
 import subscriptionRoutes from './subscription';
 
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [

@@ -5,23 +5,20 @@ import AccountMenuItem from "./AccountMenuItem.vue";
 import LogoutMenuItem from "./LogoutMenuItem.vue";
 import config from "@/config";
 import { useAuthStore } from "@/stores/auth.js";
-
 const auth = useAuthStore();
-const { login, register } = config.accountMenus;
-
-const isLogin = computed(() => auth.isAuthenticated);
-const memberName = computed(() => auth.member?.memberName);
+const { login, join } = config.accountMenus;
+const islogin = computed(() => auth.isLogin);
+const username = computed(() => auth.username);
 </script>
-
 <template>
     <ul class="flex flex-col md:flex-row ml-auto">
-        <template v-if="isLogin">
-            <AccountMenuItem :memberName="memberName" />
+        <template v-if="islogin">
+            <AccountMenuItem :username="username" />
             <LogoutMenuItem />
         </template>
         <template v-else>
             <MenuItem :menu="login" />
-            <MenuItem :menu="register" />
+            <MenuItem :menu="join" />
         </template>
     </ul>
 </template>

@@ -28,7 +28,7 @@ const onSubmit = async () => {
   try {
     await authApi.changePassword(changePassword);
     alert("비밀번호를 수정했습니다.");
-    router.push({ name: "mypage" });
+    router.push({ name: "profile" });
   } catch (e) {
     console.log(error);
     console.log(e);
