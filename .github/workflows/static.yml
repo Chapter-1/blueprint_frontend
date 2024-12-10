@@ -46,6 +46,9 @@ jobs:
         env:
           VITE_APP_API_URL: ${{ secrets.VITE_APP_API_URL }}
           
+      - name: Add CNAME file # CNAME 파일 생성 단계 추가
+        run: echo 'blu2print.site' > ./dist/CNAME
+          
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
