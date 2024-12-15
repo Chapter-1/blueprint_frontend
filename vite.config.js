@@ -6,7 +6,7 @@ import tailwindcss from 'tailwindcss'
 import autoprefixer from 'autoprefixer'
 
 export default defineConfig({
-  base: process.env.NODE_ENV === 'production' ? '/frontend/' : '/',
+  base: process.env.NODE_ENV === 'production' ? '/chapter1.blu2print.site/' : '/', // GitHub Pages 경로로 수정
   plugins: [
     vue(),
     VueDevTools(),
