@@ -4,21 +4,12 @@ import vue from '@vitejs/plugin-vue'
 import VueDevTools from 'vite-plugin-vue-devtools'
 import tailwindcss from 'tailwindcss'
 import autoprefixer from 'autoprefixer'
-import { viteStaticCopy } from 'vite-plugin-static-copy'
 
 export default defineConfig({
-  base: '/', // GitHub Pages 경로로 수정
+  base: '/', // GitHub Pages 경로
   plugins: [
     vue(),
     VueDevTools(),
-    viteStaticCopy({
-      targets: [
-        {
-          src: 'public/404.html', // 프로젝트 내 위치
-          dest: '.', // dist 디렉토리 루트로 복사
-        },
-      ],
-    }),
   ],
   define: {
     'import.meta.env.VITE_APP_API_URL': JSON.stringify(process.env.VITE_APP_API_URL),
