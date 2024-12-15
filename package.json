@@ -27,7 +27,8 @@
     "swiper": "^11.1.14",
     "vue": "^3.4.21",
     "vue-awesome-paginate": "^1.2.0",
-    "vue-router": "^4.3.0"
+    "vue-router": "^4.3.0",
+    "vite-plugin-static-copy": "^0.14.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.4",
