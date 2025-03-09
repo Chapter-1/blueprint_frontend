@@ -58,7 +58,8 @@ StyleCopReport.xml
 # Directories
 ClientBin/
 node_modules/
-dist/
+!dist/
+!dist/**
 .idea
 .vscode/
 .history/
