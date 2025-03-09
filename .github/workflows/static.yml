@@ -35,13 +35,19 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      # ✅ 빌드 로그를 자세히 확인
       - name: Build with Debugging
         run: npm run build --verbose
         env:
           VITE_APP_API_URL: ${{ secrets.VITE_APP_API_URL }}
 
+      # ✅ 프로젝트 구조 확인 (dist가 어디 있는지 체크)
+      - name: Check Project Structure
+        run: ls -la
+
+      # ✅ dist 폴더가 정상적으로 생성되었는지 확인
       - name: Debug Build Output
-        run: ls -la ./dist
+        run: ls -la ./dist || echo "dist folder not found!"
 
       - name: Verify dist folder
         run: |
@@ -55,11 +61,6 @@ jobs:
       - name: Add CNAME file
         run: echo 'blu2print.site' > ./dist/CNAME
 
-      # ✅ 업로드 전 아티팩트 디버깅
-      - name: Debug Artifacts Before Upload
-        run: ls -la ./dist
-
-      # ✅ GitHub Pages 배포를 위해 일반적인 `upload-artifact@v4` 사용
       - name: Upload Pages artifact
         uses: actions/upload-artifact@v4
         with:
@@ -76,16 +77,6 @@ jobs:
     steps:
       - name: Setup Pages
         uses: actions/configure-pages@v4
-
-      # ✅ 다운로드 후, 파일이 올바르게 존재하는지 확인
-      - name: Download artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: github-pages
-          path: github-pages
-
-      - name: Debug Downloaded Files
-        run: ls -la github-pages
 
       - name: Deploy to GitHub Pages
         id: deployment
