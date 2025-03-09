@@ -50,10 +50,10 @@ jobs:
         run: echo 'blu2print.site' > ./dist/CNAME
           
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v1
+        uses: actions/upload-pages-artifact@v2
         with:
           path: './dist'
           
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v1
+        uses: actions/deploy-pages@v2
