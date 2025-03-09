@@ -15,6 +15,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  # 빌드 작업
   build:
     runs-on: ubuntu-latest
     steps:
@@ -42,14 +43,16 @@ jobs:
           
       - name: Add CNAME file
         run: echo 'blu2print.site' > ./dist/CNAME
-          
-      - name: Upload artifact
+
+      # 빌드 결과물을 압축하여 artifacts에 업로드
+      - name: Upload Pages artifact
         uses: actions/upload-artifact@v4
         with:
           name: github-pages
           path: ./dist
           retention-days: 1
 
+  # 배포 작업
   deploy:
     needs: build
     runs-on: ubuntu-latest
@@ -64,11 +67,9 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: github-pages
-          path: ./dist
           
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2
         with:
           artifact_name: github-pages
-          path: ./dist
