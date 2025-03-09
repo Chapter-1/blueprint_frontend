@@ -1,7 +1,6 @@
 import './assets/main.css';
-import 'vue-awesome-paginate/dist/style.css';
+import '../node_modules/vue-awesome-paginate/dist/style.css';
 import './assets/tailwind.css';
-
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
 import { useAuthStore } from '@/stores/auth';
