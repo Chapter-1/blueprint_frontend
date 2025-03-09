@@ -58,17 +58,10 @@ jobs:
           name: github-pages  # ✅ 이름 일치 확인
           path: ./dist/
 
-      - name: List uploaded artifacts
-        run: |
-          echo "Uploaded artifacts:"
-          gh api repos/${{ github.repository }}/actions/artifacts
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Debug Uploaded Artifacts
         run: |
           echo "Uploaded artifacts:"
-          ls -R /home/runner/work/_temp  # ✅ 업로드된 파일 확인
+          ls -R /home/runner/work/_temp 
 
       - name: Download artifact
         uses: actions/download-artifact@v4
