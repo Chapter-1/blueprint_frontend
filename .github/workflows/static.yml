@@ -55,12 +55,11 @@ jobs:
       - name: Add CNAME file
         run: echo 'blu2print.site' > ./dist/CNAME
 
+      # ✅ GitHub Pages 배포를 위한 올바른 업로드 방법 사용
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v1
         with:
-          name: github-pages
           path: ./dist
-          retention-days: 1
 
   deploy:
     needs: build
@@ -75,5 +74,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2
-        with:
-          artifact_name: github-pages  # ✅ 다운로드 없이 직접 배포
