@@ -55,11 +55,13 @@ jobs:
       - name: Add CNAME file
         run: echo 'blu2print.site' > ./dist/CNAME
 
-      # ✅ 최신 `upload-pages-artifact@v2`로 변경
+      # ✅ GitHub Pages 배포를 위해 일반적인 `upload-artifact@v4` 사용
       - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
+          name: github-pages
           path: ./dist
+          retention-days: 1
 
   deploy:
     needs: build
@@ -74,3 +76,5 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2
+        with:
+          artifact_name: github-pages  # ✅ `upload-artifact@v4`에서 업로드한 이름과 일치해야 함.
