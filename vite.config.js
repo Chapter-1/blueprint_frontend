@@ -6,14 +6,11 @@ import tailwindcss from 'tailwindcss'
 import autoprefixer from 'autoprefixer'
 
 export default defineConfig({
-  base: '/', // GitHub Pages 경로
+  base: process.env.GITHUB_PAGES ? '/blueprint_frontend/' : '/', // ✅ GitHub Pages 경로 설정
   plugins: [
     vue(),
     VueDevTools(),
   ],
-  define: {
-    'import.meta.env.VITE_APP_API_URL': JSON.stringify(process.env.VITE_APP_API_URL),
-  },
   optimizeDeps: {
     include: ['jwt-decode'],
   },
@@ -24,7 +21,7 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url)),
+      '@': fileURLToPath(new URL('./src', import.meta.url)), // ✅ alias 설정 유지
     },
   },
   server: {
