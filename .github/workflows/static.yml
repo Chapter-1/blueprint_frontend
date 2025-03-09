@@ -1,78 +1,93 @@
 name: Deploy static content to Pages
 
 on:
-  # Runs on pushes targeting the default branch
   push:
     branches: ["main"]
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
 concurrency:
   group: "pages"
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
-  # Build job
-  build:
+  build_and_deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
-      
-      - name: Setup Node
+
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: 20
           cache: 'npm'
-      
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
-      
+
       - name: Create env file
         run: |
           echo "VITE_APP_API_URL=${{ secrets.VITE_APP_API_URL }}" > .env.production
           echo "NODE_ENV=production" >> .env.production
-      
+
       - name: Install dependencies
         run: npm ci
-      
-      - name: Build
-        run: npm run build
+
+      # ✅ 빌드 실행
+      - name: Build with Debugging
+        run: npm run build --verbose
         env:
           VITE_APP_API_URL: ${{ secrets.VITE_APP_API_URL }}
-      
+
+      # ✅ dist 폴더가 정상적으로 생성되었는지 확인
       - name: Debug Build Output
+        run: ls -la ./dist || echo "dist folder not found!"
+
+      - name: Verify dist folder
         run: |
-          echo "Checking dist directory contents:"
-          ls -la ./dist || echo "dist folder not found!"
-      
+          if [ -d "./dist" ]; then
+            echo "✅ dist directory exists."
+          else
+            echo "❌ dist directory does not exist!"
+            exit 1
+          fi
+
       - name: Add CNAME file
         run: echo 'blu2print.site' > ./dist/CNAME
-      
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+
+      # ✅ `.gitignore` 무시하고 dist 폴더 강제 추가
+      - name: Force add dist folder
+        run: |
+          git add -f dist/
+          git commit -m "Include dist folder for deployment" || echo "No changes to commit"
+
+      # ✅ `upload-artifact@v4` 경로 수정
+      - name: Upload Pages artifact
+        uses: actions/upload-artifact@v4
         with:
           name: github-pages
-          path: "./dist"
+          path: ./dist  # ✅ dist 폴더 전체 업로드
           retention-days: 1
 
-  # Deployment job
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
+      # ✅ 업로드된 아티팩트 내용 확인
+      - name: Debug Uploaded Artifacts
+        run: |
+          echo "Uploaded artifacts:"
+          ls -la /home/runner/work/_temp  # ✅ 업로드된 파일 확인
+
+      # ✅ 다운로드 후 배포 파일 확인
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: github-pages
+          path: github-pages
+
+      - name: Debug Downloaded Files (before deployment)
+        run: ls -la github-pages || echo "github-pages folder not found!"
+
+      # ✅ 배포 실행 (`artifact_name` 제거)
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v3
-        with:
-          artifact_name: github-pages
+        uses: actions/deploy-pages@v2
