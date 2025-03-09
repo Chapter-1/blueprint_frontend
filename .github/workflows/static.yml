@@ -49,9 +49,6 @@ jobs:
             exit 1
           fi
 
-      - name: Add CNAME file
-        run: echo 'blu2print.site' > ./dist/CNAME
-
       - name: Upload Pages artifact
         uses: actions/upload-artifact@v4
         with:
