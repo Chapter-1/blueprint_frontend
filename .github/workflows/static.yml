@@ -56,7 +56,7 @@ jobs:
         run: echo 'blu2print.site' > ./dist/CNAME
 
       - name: Upload Pages artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-pages-artifact@v1
         with:
           name: github-pages
           path: ./dist
