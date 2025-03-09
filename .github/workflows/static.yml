@@ -48,12 +48,12 @@ jobs:
       - name: Add CNAME file
         run: echo 'blu2print.site' > ./dist/CNAME
           
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@latest
+      - name: Archive build
+        uses: actions/upload-artifact@v4
         with:
-          path: './dist'
-          name: 'github-pages'
+          name: github-pages
+          path: ./dist
           
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@latest
+        uses: actions/deploy-pages@v2
