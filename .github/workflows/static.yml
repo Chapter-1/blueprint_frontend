@@ -55,9 +55,9 @@ jobs:
       - name: Add CNAME file
         run: echo 'blu2print.site' > ./dist/CNAME
 
-      # ✅ GitHub Pages 배포를 위한 올바른 업로드 방법 사용
+      # ✅ 최신 `upload-pages-artifact@v2`로 변경
       - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v1
+        uses: actions/upload-pages-artifact@v2
         with:
           path: ./dist
 
