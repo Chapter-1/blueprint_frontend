@@ -68,14 +68,14 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: github-pages
-          path: ./dist  # ✅ dist 폴더 전체 업로드
+          path: ./dist/  # ✅ dist 폴더 전체 업로드
           retention-days: 1
 
       # ✅ 업로드된 아티팩트 내용 확인
       - name: Debug Uploaded Artifacts
         run: |
           echo "Uploaded artifacts:"
-          ls -la /home/runner/work/_temp  # ✅ 업로드된 파일 확인
+          ls -R /home/runner/work/_temp  # ✅ 업로드된 파일 확인
 
       # ✅ 다운로드 후 배포 파일 확인
       - name: Download artifact
@@ -85,7 +85,7 @@ jobs:
           path: github-pages
 
       - name: Debug Downloaded Files (before deployment)
-        run: ls -la github-pages || echo "github-pages folder not found!"
+        run: ls -R github-pages || echo "github-pages folder not found!"
 
       # ✅ 배포 실행 (`artifact_name` 제거)
       - name: Deploy to GitHub Pages
