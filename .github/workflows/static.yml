@@ -76,12 +76,14 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: github-pages
+          path: github-pages  # ✅ 다운로드한 아티팩트를 저장할 폴더 지정
 
       - name: Debug Downloaded Files
-        run: ls -la .
+        run: ls -la github-pages  # ✅ 다운로드된 파일 확인
 
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2
         with:
           artifact_name: github-pages
+          path: github-pages  # ✅ 명확한 배포 경로 지정
