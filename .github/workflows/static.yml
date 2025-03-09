@@ -41,12 +41,6 @@ jobs:
         env:
           VITE_APP_API_URL: ${{ secrets.VITE_APP_API_URL }}
 
-      # ✅ 빌드된 `dist/` 폴더 강제 추가
-      - name: Force add dist folder
-        run: |
-          git add -f dist/
-          git commit -m "Include dist folder for deployment" || echo "No changes to commit"
-
       # ✅ dist 폴더가 정상적으로 생성되었는지 확인
       - name: Debug Build Output
         run: ls -la ./dist || echo "dist folder not found!"
@@ -63,12 +57,12 @@ jobs:
       - name: Add CNAME file
         run: echo 'blu2print.site' > ./dist/CNAME
 
-      # ✅ GitHub Pages 배포를 위해 `upload-artifact@v4` 사용
+      # ✅ `upload-artifact@v4` 경로 수정 및 이름 변경
       - name: Upload Pages artifact
         uses: actions/upload-artifact@v4
         with:
-          name: github-pages
-          path: ./dist
+          name: github-pages-artifact
+          path: ./dist/*
           retention-days: 1
 
       # ✅ 업로드된 아티팩트 내용 확인
@@ -81,15 +75,15 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          name: github-pages
+          name: github-pages-artifact
           path: github-pages
 
       - name: Debug Downloaded Files (before deployment)
         run: ls -la github-pages || echo "github-pages folder not found!"
 
-      # ✅ 배포 실행
+      # ✅ 배포 실행 (이름 변경)
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2
         with:
-          artifact_name: github-pages
+          artifact_name: github-pages-artifact  # ✅ 변경된 이름 적용
