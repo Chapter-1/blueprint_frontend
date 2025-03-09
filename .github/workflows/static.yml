@@ -57,18 +57,12 @@ jobs:
       - name: Add CNAME file
         run: echo 'blu2print.site' > ./dist/CNAME
 
-      # ✅ `.gitignore` 무시하고 dist 폴더 강제 추가
-      - name: Force add dist folder
-        run: |
-          git add -f dist/
-          git commit -m "Include dist folder for deployment" || echo "No changes to commit"
-
       # ✅ `upload-artifact@v4` 경로 수정
       - name: Upload Pages artifact
         uses: actions/upload-artifact@v4
         with:
-          name: github-pages
-          path: ./dist/  # ✅ dist 폴더 전체 업로드
+          name: github-pages  # ✅ 이름 명확히 설정
+          path: ./dist/
           retention-days: 1
 
       # ✅ 업로드된 아티팩트 내용 확인
@@ -81,13 +75,15 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          name: github-pages
+          name: github-pages  # ✅ 업로드된 아티팩트 이름과 일치해야 함.
           path: github-pages
 
       - name: Debug Downloaded Files (before deployment)
         run: ls -R github-pages || echo "github-pages folder not found!"
 
-      # ✅ 배포 실행 (`artifact_name` 제거)
+      # ✅ 배포 실행 (`artifact_name` 추가)
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2
+        with:
+          artifact_name: github-pages
